@@ -141,16 +141,16 @@ function App() {
 
         {isModalOpen && (
           <div
-            className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 px-3"
+            className="fixed -inset-10 z-50 flex items-center justify-center bg-black/40 px-3"
             role="dialog"
             aria-modal="true"
           >
-            <div className="w-full max-w-sm rounded-3xl bg-slate-950 text-slate-50 p-4 sm:p-5 space-y-4 shadow-2xl">
+            <div className="w-full max-w-sm rounded-3xl bg-white text-slate-900 p-4 sm:p-5 space-y-4 shadow-2xl border border-slate-200">
               <div className="flex items-center justify-between">
                 <h2 className="text-lg font-semibold">معاينة البطاقة</h2>
                 <button
                   type="button"
-                  className="text-2xl leading-none text-slate-400 hover:text-slate-100"
+                  className="text-2xl leading-none text-slate-400 hover:text-slate-700"
                   onClick={() => setIsModalOpen(false)}
                   aria-label="إغلاق المعاينة"
                 >
@@ -158,7 +158,7 @@ function App() {
                 </button>
               </div>
 
-              <div className="mt-2 rounded-2xl overflow-hidden bg-slate-900 shadow-xl">
+              <div className="mt-2 rounded-2xl overflow-hidden bg-slate-100 shadow-inner">
                 <div className="max-w-xs mx-auto">
                   <img
                     ref={imageRef}
@@ -174,7 +174,7 @@ function App() {
               <div className="mt-3 flex justify-end gap-2">
                 <button
                   type="button"
-                  className="inline-flex items-center justify-center rounded-full border border-indigo-300 px-4 py-2 text-sm font-medium text-indigo-100 hover:bg-indigo-700/40 disabled:opacity-60"
+                  className="inline-flex items-center justify-center rounded-full border border-indigo-300 px-4 py-2 text-sm font-medium text-indigo-700 hover:bg-indigo-50 disabled:opacity-60"
                   onClick={handleDownload}
                   disabled={!submittedName}
                 >
@@ -182,7 +182,7 @@ function App() {
                 </button>
                 <button
                   type="button"
-                  className="inline-flex items-center justify-center rounded-full bg-slate-100 px-4 py-2 text-sm font-medium text-slate-900 hover:bg-white"
+                  className="inline-flex items-center justify-center rounded-full bg-slate-900 px-4 py-2 text-sm font-medium text-slate-50 hover:bg-slate-800"
                   onClick={() => setIsModalOpen(false)}
                 >
                   إغلاق

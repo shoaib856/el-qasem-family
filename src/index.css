@@ -1,6 +1,21 @@
 @import "tailwindcss";
 
 @font-face {
+  font-family: "Aref Ruqaa";
+  src: url("/src/assets/Aref_Ruqaa/ArefRuqaa-Regular.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Aref Ruqaa";
+  src: url("/src/assets/Aref_Ruqaa/ArefRuqaa-Bold.ttf") format("truetype");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
   font-family: "Changa";
   src: url("/src/assets/Changa/Changa-VariableFont_wght.ttf") format("truetype");
   font-weight: 100 900;
@@ -9,6 +24,7 @@
 }
 @theme {
   --font-changa: "Changa", system-ui, "Segoe UI", Roboto, sans-serif;
+  --font-aref: "Aref Ruqaa", system-ui, "Segoe UI", Roboto, sans-serif;
 }
 
 :root {

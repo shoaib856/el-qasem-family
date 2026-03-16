@@ -59,15 +59,7 @@ function App() {
     context.clearRect(0, 0, naturalWidth, naturalHeight);
     context.drawImage(img, 0, 0, naturalWidth, naturalHeight);
 
-    const fontSize = Math.round(naturalWidth / 16);
-    context.font = `${fontSize}px "Changa", system-ui, sans-serif`;
-    context.fillStyle = "#2e2a85";
-    context.textAlign = "center";
-    context.textBaseline = "middle";
-
-    const x = naturalWidth / 2;
     const maxCharsPerLine = 24;
-
     const words = name.split(" ");
     const lines: string[] = [];
     let currentLine = "";
@@ -97,9 +89,25 @@ function App() {
       lines.push(currentLine);
     }
 
-    const lineHeight = fontSize * 1.3;
+    const lineCount = lines.length;
+    const lineHeightRatio = 1.3;
+    const availableHeight = naturalHeight * 0.2;
+    const maxFontSize = Math.round(naturalWidth / 10);
+    const minFontSize = Math.round(naturalWidth / 22);
+    const idealFontSize = availableHeight / (lineCount * lineHeightRatio);
+    const fontSize = Math.round(
+      Math.max(minFontSize, Math.min(maxFontSize, idealFontSize))
+    );
+
+    context.font = `${fontSize}px "Aref Ruqaa", system-ui, sans-serif`;
+    context.fillStyle = "#2e2a85";
+    context.textAlign = "center";
+    context.textBaseline = "middle";
+
+    const x = naturalWidth / 2;
+    const lineHeight = fontSize * lineHeightRatio;
     const baseY = naturalHeight * 0.89;
-    const startY = baseY - ((lines.length - 1) * lineHeight) / 2;
+    const startY = baseY - ((lineCount - 1) * lineHeight) / 2;
 
     lines.forEach((line, index) => {
       const y = startY + index * lineHeight;

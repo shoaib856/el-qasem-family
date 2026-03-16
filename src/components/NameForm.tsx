@@ -26,7 +26,7 @@ export function NameForm({
 }: NameFormProps) {
   return (
     <form
-      className="space-y-4 rounded-2xl"
+      className="space-y-2 rounded-2xl"
       onSubmit={handleSubmit(onSubmit)}
       noValidate
     >
@@ -51,7 +51,7 @@ export function NameForm({
       />
 
       {errors.name ? (
-        <p className="text-xs text-red-500 mt-1">{errors.name.message}</p>
+        <p className="text-xs text-red-500">{errors.name.message}</p>
       ) : null}
 
       <button

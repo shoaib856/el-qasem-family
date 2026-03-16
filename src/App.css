@@ -1,3 +1,23 @@
-/* Tailwind utility classes are used for styling.
-   Keep this file for any tiny overrides if needed later. */
+@keyframes modal-in {
+  from {
+    opacity: 0;
+    transform: translateY(16px) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.card-dialog .animate-modal-in {
+  animation: modal-in 220ms ease-out;
+}
+
+dialog.card-dialog {
+  margin: auto;
+  max-width: 420px;
+  width: 100%;
+  border-radius: 28px;
+  padding: 0;
+}
 

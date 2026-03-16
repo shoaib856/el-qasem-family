@@ -140,7 +140,7 @@ function App() {
     >
       <div className="w-full max-w-md rounded-3xl bg-white/95 border border-slate-200/80 shadow-2xl px-6 py-7 space-y-6">
         <h1 className="flex items-center justify-center gap-2 text-2xl sm:text-3xl font-semibold text-slate-900">
-          <Sparkles className="h-6 w-6 text-violet-500" />
+          <Sparkles className="size-6 text-violet-500" />
           <span>بطاقة تهنئة بالعيد</span>
         </h1>
 
@@ -154,7 +154,7 @@ function App() {
               className="flex items-center gap-1 text-sm font-medium text-slate-900"
               htmlFor="name"
             >
-              <User className="h-4 w-4 text-indigo-500" />
+              <User className="size-4 text-indigo-500" />
               <span>أدخل الاسم</span>
             </label>
             <p className="text-xs text-slate-500">
@@ -179,7 +179,7 @@ function App() {
             type="submit"
             className="mt-2 cursor-pointer inline-flex w-full items-center justify-center gap-2 rounded-full bg-linear-to-l from-indigo-600 to-violet-600 px-5 py-2.5 text-sm font-semibold text-white shadow-lg shadow-indigo-500/40 transition hover:-translate-y-0.5 hover:shadow-xl disabled:opacity-60 disabled:hover:translate-y-0"
           >
-            <Eye className="h-4 w-4" />
+            <Eye className="size-4" />
             إنشاء معاينة البطاقة
           </button>
         </form>
@@ -193,21 +193,21 @@ function App() {
             <div className="w-full max-w-sm rounded-3xl bg-white text-slate-900 p-4 sm:p-5 space-y-4 shadow-2xl border border-slate-200">
               <div className="flex items-center justify-between">
                 <h2 className="flex items-center gap-2 text-lg font-semibold">
-                  <Eye className="h-4 w-4 text-indigo-500" />
+                  <Eye className="size-4 text-indigo-500" />
                   <span>معاينة البطاقة</span>
                 </h2>
                 <button
                   type="button"
-                  className="inline-flex h-7 w-7 items-center justify-center rounded-full text-slate-400 hover:text-slate-700 hover:bg-slate-100"
+                  className="inline-flex size-7 items-center justify-center rounded-full text-slate-400 hover:text-slate-700 hover:bg-slate-100"
                   onClick={() => setIsModalOpen(false)}
                   aria-label="إغلاق المعاينة"
                 >
-                  <X className="h-4 w-4" />
+                  <X className="size-4" />
                 </button>
               </div>
 
               <div className="mt-2 rounded-2xl bg-slate-100 shadow-inner">
-                <div className="max-w-2xs mx-auto">
+                <div className="max-w-3xs mx-auto">
                   <img
                     ref={imageRef}
                     src={eidTemplate}
@@ -226,7 +226,7 @@ function App() {
                   onClick={handleDownload}
                   disabled={!submittedName}
                 >
-                  <Download className="h-4 w-4" />
+                  <Download className="size-4" />
                   تحميل الصورة
                 </button>
                 <button

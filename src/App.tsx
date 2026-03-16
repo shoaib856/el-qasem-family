@@ -99,19 +99,28 @@ function App() {
       Math.max(minFontSize, Math.min(maxFontSize, idealFontSize))
     );
 
-    context.font = `${fontSize}px "Aref Ruqaa", system-ui, sans-serif`;
-    context.fillStyle = "#2e2a85";
-    context.textAlign = "center";
-    context.textBaseline = "middle";
-
     const x = naturalWidth / 2;
     const lineHeight = fontSize * lineHeightRatio;
     const baseY = naturalHeight * 0.89;
     const startY = baseY - ((lineCount - 1) * lineHeight) / 2;
 
-    lines.forEach((line, index) => {
-      const y = startY + index * lineHeight;
-      context.fillText(line, x, y);
+    const drawText = () => {
+      const ctx = canvasRef.current?.getContext("2d");
+      if (!ctx) return;
+      ctx.font = `${fontSize}px "Aref Ruqaa", system-ui, sans-serif`;
+      ctx.fillStyle = "#2e2a85";
+      ctx.textAlign = "center";
+      ctx.textBaseline = "middle";
+      lines.forEach((line, index) => {
+        const y = startY + index * lineHeight;
+        ctx.fillText(line, x, y);
+      });
+    };
+
+    document.fonts.load(`${fontSize}px "Aref Ruqaa"`).then(() => {
+      drawText();
+    }).catch(() => {
+      drawText();
     });
   }, []);
 

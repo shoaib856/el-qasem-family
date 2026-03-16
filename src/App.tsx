@@ -158,7 +158,7 @@ function App() {
                 </button>
               </div>
 
-              <div className="mt-2 rounded-2xl overflow-hidden bg-slate-100 shadow-inner">
+              <div className="mt-2 rounded-2xl bg-slate-100 shadow-inner">
                 <div className="max-w-xs mx-auto">
                   <img
                     ref={imageRef}

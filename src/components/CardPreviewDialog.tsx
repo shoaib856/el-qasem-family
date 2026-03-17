@@ -55,54 +55,50 @@ export function CardPreviewDialog({
       }}
     >
       <div className="space-y-4 animate-modal-in">
-        <div
-          ref={contentRef}
-          className="space-y-4 p-4 sm:p-5 max-w-sm w-full"
-        >
+        <div ref={contentRef} className="space-y-4 p-4 sm:p-5 max-w-sm w-full">
           <div className="flex items-center justify-between">
-          <h2 className="flex items-center gap-2 text-lg font-semibold">
-            <Eye className="size-4 text-[#c28b37]" />
-            <span>معاينة البطاقة</span>
-          </h2>
+            <h2 className="flex items-center gap-2 text-lg font-semibold">
+              <Eye className="size-4 text-[#c28b37]" />
+              <span>معاينة البطاقة</span>
+            </h2>
           </div>
 
           <div className="rounded-2xl bg-[#f6f0e4] shadow-inner">
-          <div className="max-w-3xs mx-auto">
-            <img
-              ref={imageRef as React.RefObject<HTMLImageElement>}
-              src={eidTemplate}
-              alt="بطاقة تهنئة بالعيد"
-              className="hidden"
-              onLoad={() => drawCard(submittedName)}
-            />
-            <canvas
-              ref={canvasRef as React.RefObject<HTMLCanvasElement>}
-              className="w-full h-auto block"
-            />
-          </div>
+            <div className="max-w-xs mx-auto overflow-hidden">
+              <img
+                ref={imageRef as React.RefObject<HTMLImageElement>}
+                src={eidTemplate}
+                alt="بطاقة تهنئة بالعيد"
+                className="hidden"
+                onLoad={() => drawCard(submittedName)}
+              />
+              <canvas
+                ref={canvasRef as React.RefObject<HTMLCanvasElement>}
+                className="w-full h-auto block"
+              />
+            </div>
           </div>
 
           <div className="mt-3 flex flex-col gap-2">
-          <button
-            type="button"
-            className="cursor-pointer inline-flex items-center justify-center gap-2 rounded-lg border border-[#d7ba7d] px-4 py-2 text-sm font-medium text-[#7b5a1e] hover:bg-[#f6eee1] disabled:opacity-60 transition"
-            onClick={onDownload}
-            disabled={!submittedName}
-          >
-            <Download className="size-4" />
-            تحميل الصورة
-          </button>
-          <button
-            type="button"
-            className="cursor-pointer inline-flex items-center justify-center rounded-lg bg-[#3c2b17] px-4 py-2 text-sm font-medium text-white hover:bg-[#271b0d] transition"
-            onClick={onClose}
-          >
-            إغلاق
-          </button>
+            <button
+              type="button"
+              className="cursor-pointer inline-flex items-center justify-center gap-2 rounded-lg border border-[#d7ba7d] px-4 py-2 text-sm font-medium text-[#7b5a1e] hover:bg-[#f6eee1] disabled:opacity-60 transition"
+              onClick={onDownload}
+              disabled={!submittedName}
+            >
+              <Download className="size-4" />
+              تحميل الصورة
+            </button>
+            <button
+              type="button"
+              className="cursor-pointer inline-flex items-center justify-center rounded-lg bg-[#3c2b17] px-4 py-2 text-sm font-medium text-white hover:bg-[#271b0d] transition"
+              onClick={onClose}
+            >
+              إغلاق
+            </button>
+          </div>
         </div>
-      </div>
       </div>
     </dialog>
   );
 }
-

@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
-import eidTemplate from "./assets/el-qasem.jpeg";
+import eidTemplate from "./assets/جريتنج الفاسم.png";
 import eventXLight from "./assets/event-x-light.png";
 import beigePattern from "./assets/beige-pattern.png";
 import { Sparkles } from "lucide-react";
@@ -90,10 +90,10 @@ function App() {
     }
 
     const lineCount = lines.length;
-    const lineHeightRatio = 1.3;
-    const availableHeight = naturalHeight * 0.2;
-    const maxFontSize = Math.round(naturalWidth / 10);
-    const minFontSize = Math.round(naturalWidth / 22);
+    const lineHeightRatio = 1.35;
+    const availableHeight = naturalHeight * 0.09;
+    const maxFontSize = Math.round(naturalWidth / 16);
+    const minFontSize = Math.round(naturalWidth / 26);
     const idealFontSize = availableHeight / (lineCount * lineHeightRatio);
     const fontSize = Math.round(
       Math.max(minFontSize, Math.min(maxFontSize, idealFontSize))
@@ -101,27 +101,50 @@ function App() {
 
     const x = naturalWidth / 2;
     const lineHeight = fontSize * lineHeightRatio;
-    const baseY = naturalHeight * 0.89;
+    const baseY = naturalHeight * 0.865;
     const startY = baseY - ((lineCount - 1) * lineHeight) / 2;
 
-    const drawText = () => {
+    // Box between the two crosses; must not overlap the small stars near bottom
+    const crossMarginRatio = 0.285;
+    const boxLeft = naturalWidth * crossMarginRatio;
+    const boxRight = naturalWidth * (1 - crossMarginRatio);
+    const boxWidth = boxRight - boxLeft;
+    const padding = Math.max(fontSize * 0.5, naturalHeight * 0.02);
+    const boxTop = startY - lineHeight / 4 - padding;
+    const maxBoxBottom = naturalHeight * 0.92; // keep above bottom star ornaments
+    const rawBoxHeight = lineCount * lineHeight + padding * 2;
+    const boxHeight = Math.min(
+      rawBoxHeight,
+      Math.max(0, maxBoxBottom - boxTop)
+    );
+
+    const drawNameBoxAndText = () => {
       const ctx = canvasRef.current?.getContext("2d");
       if (!ctx) return;
+
+      // Transparent box (stroke only) around the name, not over the stars
+      ctx.strokeStyle = "#5a2f86";
+      ctx.lineWidth = Math.max(2, naturalWidth / 200);
+      ctx.strokeRect(boxLeft, boxTop, boxWidth, boxHeight);
+
       ctx.font = `${fontSize}px "Aref Ruqaa", system-ui, sans-serif`;
-      ctx.fillStyle = "#2e2a85";
       ctx.textAlign = "center";
       ctx.textBaseline = "middle";
+      ctx.fillStyle = "#5a2f86";
       lines.forEach((line, index) => {
         const y = startY + index * lineHeight;
         ctx.fillText(line, x, y);
       });
     };
 
-    document.fonts.load(`${fontSize}px "Aref Ruqaa"`).then(() => {
-      drawText();
-    }).catch(() => {
-      drawText();
-    });
+    document.fonts
+      .load(`${fontSize}px "Aref Ruqaa"`)
+      .then(() => {
+        drawNameBoxAndText();
+      })
+      .catch(() => {
+        drawNameBoxAndText();
+      });
   }, []);
 
   useEffect(() => {

@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from "react";
-import { useForm } from "react-hook-form";
+import { useForm, useWatch } from "react-hook-form";
 import eidTemplate from "./assets/جريتنج الفاسم.png";
 import eventXLight from "./assets/event-x-light.png";
 import beigePattern from "./assets/beige-pattern.png";
@@ -23,15 +23,15 @@ function App() {
   const {
     register,
     handleSubmit,
-    watch,
     formState: { errors },
+    control,
   } = useForm<FormValues>({
     defaultValues: {
       name: "",
     },
   });
 
-  const nameValue = watch("name") ?? "";
+  const nameValue = useWatch({ control, name: "name" }) ?? "";
 
   const onSubmit = (data: FormValues) => {
     const trimmed = data.name.trim();
@@ -96,7 +96,7 @@ function App() {
     const minFontSize = Math.round(naturalWidth / 26);
     const idealFontSize = availableHeight / (lineCount * lineHeightRatio);
     const fontSize = Math.round(
-      Math.max(minFontSize, Math.min(maxFontSize, idealFontSize))
+      Math.max(minFontSize, Math.min(maxFontSize, idealFontSize)),
     );
 
     const x = naturalWidth / 2;
@@ -104,28 +104,9 @@ function App() {
     const baseY = naturalHeight * 0.865;
     const startY = baseY - ((lineCount - 1) * lineHeight) / 2;
 
-    // Box between the two crosses; must not overlap the small stars near bottom
-    const crossMarginRatio = 0.285;
-    const boxLeft = naturalWidth * crossMarginRatio;
-    const boxRight = naturalWidth * (1 - crossMarginRatio);
-    const boxWidth = boxRight - boxLeft;
-    const padding = Math.max(fontSize * 0.5, naturalHeight * 0.02);
-    const boxTop = startY - lineHeight / 4 - padding;
-    const maxBoxBottom = naturalHeight * 0.92; // keep above bottom star ornaments
-    const rawBoxHeight = lineCount * lineHeight + padding * 2;
-    const boxHeight = Math.min(
-      rawBoxHeight,
-      Math.max(0, maxBoxBottom - boxTop)
-    );
-
     const drawNameBoxAndText = () => {
       const ctx = canvasRef.current?.getContext("2d");
       if (!ctx) return;
-
-      // Transparent box (stroke only) around the name, not over the stars
-      ctx.strokeStyle = "#5a2f86";
-      ctx.lineWidth = Math.max(2, naturalWidth / 200);
-      ctx.strokeRect(boxLeft, boxTop, boxWidth, boxHeight);
 
       ctx.font = `${fontSize}px "Aref Ruqaa", system-ui, sans-serif`;
       ctx.textAlign = "center";

@@ -1,21 +1,24 @@
 import { useEffect, useRef } from "react";
 import { Download, Eye } from "lucide-react";
 import { useOnClickOutside } from "usehooks-ts";
+import type { FontOption } from "../App";
 
 type CardPreviewDialogProps = {
   isOpen: boolean;
   submittedName: string | null;
+  submittedFont: FontOption;
   eidTemplate: string;
   onClose: () => void;
   onDownload: () => void;
   canvasRef: React.RefObject<HTMLCanvasElement | null>;
   imageRef: React.RefObject<HTMLImageElement | null>;
-  drawCard: (name: string | null) => void;
+  drawCard: (name: string | null, fontKey?: FontOption) => void;
 };
 
 export function CardPreviewDialog({
   isOpen,
   submittedName,
+  submittedFont,
   eidTemplate,
   onClose,
   onDownload,
@@ -38,11 +41,11 @@ export function CardPreviewDialog({
 
     if (isOpen && !dialog.open) {
       dialog.showModal();
-      drawCard(submittedName);
+      drawCard(submittedName, submittedFont);
     } else if (!isOpen && dialog.open) {
       dialog.close();
     }
-  }, [isOpen, submittedName, drawCard]);
+  }, [isOpen, submittedName, submittedFont, drawCard]);
 
   return (
     <dialog
@@ -70,7 +73,7 @@ export function CardPreviewDialog({
                 src={eidTemplate}
                 alt="بطاقة تهنئة بالعيد"
                 className="hidden"
-                onLoad={() => drawCard(submittedName)}
+                onLoad={() => drawCard(submittedName, submittedFont)}
               />
               <canvas
                 ref={canvasRef as React.RefObject<HTMLCanvasElement>}

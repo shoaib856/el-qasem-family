@@ -9,12 +9,21 @@ import { EidHeader } from "./components/EidHeader";
 import { NameForm } from "./components/NameForm";
 import { CardPreviewDialog } from "./components/CardPreviewDialog";
 
-type FormValues = {
+export const AVAILABLE_FONTS = [
+  { value: "changa", label: "Changa", fontFamily: "Changa" },
+  { value: "aref-ruqaa", label: "Aref Ruqaa", fontFamily: "Aref Ruqaa" },
+] as const;
+
+export type FontOption = (typeof AVAILABLE_FONTS)[number]["value"];
+
+export type FormValues = {
   name: string;
+  font: FontOption;
 };
 
 function App() {
   const [submittedName, setSubmittedName] = useState<string | null>(null);
+  const [submittedFont, setSubmittedFont] = useState<FontOption>("aref-ruqaa");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const downloadLinkRef = useRef<HTMLAnchorElement | null>(null);
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
@@ -28,19 +37,22 @@ function App() {
   } = useForm<FormValues>({
     defaultValues: {
       name: "",
+      font: "aref-ruqaa",
     },
   });
 
   const nameValue = useWatch({ control, name: "name" }) ?? "";
+  const fontValue = useWatch({ control, name: "font" }) ?? "aref-ruqaa";
 
   const onSubmit = (data: FormValues) => {
     const trimmed = data.name.trim();
     if (!trimmed) return;
     setSubmittedName(trimmed);
+    setSubmittedFont(data.font);
     setIsModalOpen(true);
   };
 
-  const drawCard = useCallback((name: string | null) => {
+  const drawCard = useCallback((name: string | null, fontKey: FontOption = "aref-ruqaa") => {
     if (!name) return;
 
     const img = imageRef.current;
@@ -104,11 +116,14 @@ function App() {
     const baseY = naturalHeight * 0.865;
     const startY = baseY - ((lineCount - 1) * lineHeight) / 2;
 
+    const fontConfig = AVAILABLE_FONTS.find((f) => f.value === fontKey) ?? AVAILABLE_FONTS[1];
+    const fontFamily = fontConfig.fontFamily;
+
     const drawNameBoxAndText = () => {
       const ctx = canvasRef.current?.getContext("2d");
       if (!ctx) return;
 
-      ctx.font = `${fontSize}px "Aref Ruqaa", system-ui, sans-serif`;
+      ctx.font = `${fontSize}px "${fontFamily}", system-ui, sans-serif`;
       ctx.textAlign = "center";
       ctx.textBaseline = "middle";
       ctx.fillStyle = "#5a2f86";
@@ -119,7 +134,7 @@ function App() {
     };
 
     document.fonts
-      .load(`${fontSize}px "Aref Ruqaa"`)
+      .load(`${fontSize}px "${fontFamily}"`)
       .then(() => {
         drawNameBoxAndText();
       })
@@ -129,8 +144,8 @@ function App() {
   }, []);
 
   useEffect(() => {
-    drawCard(submittedName);
-  }, [submittedName, drawCard]);
+    drawCard(submittedName, submittedFont);
+  }, [submittedName, submittedFont, drawCard]);
 
   const handleDownload = () => {
     if (!submittedName) return;
@@ -181,11 +196,14 @@ function App() {
             errors={errors}
             onSubmit={onSubmit}
             handleSubmit={handleSubmit}
+            availableFonts={AVAILABLE_FONTS}
+            selectedFont={fontValue}
           />
 
           <CardPreviewDialog
             isOpen={isModalOpen}
             submittedName={submittedName}
+            submittedFont={submittedFont}
             eidTemplate={eidTemplate}
             onClose={() => setIsModalOpen(false)}
             onDownload={handleDownload}
